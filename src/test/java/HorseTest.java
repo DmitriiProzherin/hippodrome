@@ -9,51 +9,65 @@ import org.mockito.Mockito;
 
 
 class HorseTest {
-    static Throwable nullException = new Throwable();
-    static Throwable blankException = new Throwable();
-    static Throwable speedException = new Throwable();
-    static Throwable distanceException = new Throwable();
 
     @Test
     public void TetConstructorForNull(){
-        nullException = assertThrows(IllegalArgumentException.class, () -> new Horse(null, 1, 1));
+        assertThrows(IllegalArgumentException.class, () -> new Horse(null, 1, 1));
     }
 
     @Test
     public void TestConstructorForNullMessage(){
-        assertEquals("Name cannot be null.", nullException.getMessage());
+        try {
+            new Horse(null, 1, 1);
+        } catch (Exception e) {
+            assertEquals("Name cannot be null.", e.getMessage());
+        }
     }
 
     @ParameterizedTest
     @ValueSource(strings =
-            {"", " ", "\n", "\t"})
-    public void TestConstructorForEmptyInputs(String string){
-        blankException = assertThrows(IllegalArgumentException.class, () -> new Horse(string, 1,1));
+            {"", " ", "\n", "\t", " \n", "\n ", " \t", "\t "})
+    public void TestConstructorForEmptyInputs(String name){
+        assertThrows(IllegalArgumentException.class, () -> new Horse(name, 1,1));
     }
 
-    @Test
-    public void TestConstructorForEmptyMessage(){
-        assertEquals("Name cannot be blank.", blankException.getMessage());
+    @ParameterizedTest
+    @ValueSource(strings =
+            {"", " ", "\n", "\t", " \n", "\n ", " \t", "\t "})
+    public void TestConstructorForEmptyMessage(String name){
+        try {
+            new Horse(name, 1, 1);
+        } catch (Exception e) {
+            assertEquals("Name cannot be blank.", e.getMessage());
+        }
     }
 
     @Test
     public void TestConstructorForNegativeSpeed(){
-        speedException = assertThrows(IllegalArgumentException.class, () -> new Horse("One", -1, 1));
+        assertThrows(IllegalArgumentException.class, () -> new Horse("One", -1, 1));
     }
 
     @Test
     public void TestConstructorMessageForNegativeSpeed(){
-        assertEquals("Speed cannot be negative.", speedException.getMessage());
+        try {
+            new Horse("One", -1, 1);
+        } catch (Exception e) {
+            assertEquals("Speed cannot be negative.", e.getMessage());
+        }
     }
 
     @Test
     public void TestConstructorForNegativeDistance(){
-        distanceException = assertThrows(IllegalArgumentException.class, () -> new Horse("One", 1, -1));
+        assertThrows(IllegalArgumentException.class, () -> new Horse("One", 1, -1));
     }
 
     @Test
     public void TestConstructorMessageForNegativeDistance(){
-        assertEquals("Distance cannot be negative.", distanceException.getMessage());
+        try {
+            new Horse("One", 1, -1);
+        } catch (Exception e) {
+            assertEquals("Distance cannot be negative.", e.getMessage());
+        }
     }
 
     @Test
