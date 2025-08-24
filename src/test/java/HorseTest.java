@@ -90,10 +90,10 @@ public class HorseTest {
     }
 
     @Test
-    public void getSpeedProvidesZeroWithTwoArgsConstructor() {
+    public void getDistanceProvidesZeroWithTwoArgsConstructor() {
         Horse horse = new Horse("Test", 1);
 
-        assertEquals(0, horse.getSpeed());
+        assertEquals(0, horse.getDistance());
     }
 
     @Test
